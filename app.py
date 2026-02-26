@@ -19,40 +19,6 @@ def load_data():
 
 df = load_data()
 
-# ---------------- THEME TOGGLE ----------------
-theme = st.toggle("🌗 Toggle Theme (Dark / Light)", value=False)
-
-if theme:
-    st.markdown("""
-        <style>
-        .stApp {
-            background-color: #0E1117;
-            color: white;
-        }
-        section[data-testid="stSidebar"] {
-            background-color: #161A23;
-        }
-        div[data-testid="stMetricValue"] {
-            color: #00FFAA;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-else:
-    st.markdown("""
-        <style>
-        .stApp {
-            background-color: #FFFFFF;
-            color: black;
-        }
-        section[data-testid="stSidebar"] {
-            background-color: #F0F2F6;
-        }
-        div[data-testid="stMetricValue"] {
-            color: #0068C9;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-
 # ---------------- TITLE ----------------
 st.title("🔐 Global Cybersecurity Threats Dashboard (2015-2024)")
 st.markdown("Interactive Data Visualization & EDA Platform")
@@ -77,7 +43,7 @@ categorical_cols = df.select_dtypes(exclude=np.number).columns.tolist()
 x_axis = st.sidebar.selectbox("Select X-axis", df.columns)
 y_axis = st.sidebar.selectbox("Select Y-axis", numeric_cols)
 
-# ---------------- CATEGORY VALUE FILTER ----------------
+# ---------------- CATEGORY FILTER ----------------
 filtered_df = df.copy()
 
 if categorical_cols:
@@ -155,15 +121,11 @@ ax.set_title(f"{chart_type} Chart using {library}")
 plt.xticks(rotation=45)
 st.pyplot(fig)
 
-# ---------------- PREPROCESSED DATA ----------------
-st.subheader("🧹 Data Analysis & Preprocessing")
+# ---------------- DATA SECTION ----------------
+st.subheader("🧹 Data Analysis")
 
 with st.expander("View Raw Data (Top 10 Rows)"):
     st.dataframe(df.head(10))
-
-with st.expander("View Cleaned Data (No Missing Values)"):
-    cleaned_df = df.dropna()
-    st.dataframe(cleaned_df.head(10))
 
 with st.expander("Missing Values Summary"):
     st.write(df.isnull().sum())
@@ -175,7 +137,7 @@ with st.expander("Correlation Matrix"):
     st.write(df.corr(numeric_only=True))
 
 # ---------------- METRICS ----------------
-st.subheader("📈 Additional Insights")
+st.subheader("📈 Dataset Overview")
 
 col1, col2 = st.columns(2)
 
