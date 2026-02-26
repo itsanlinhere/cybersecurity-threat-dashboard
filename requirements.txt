@@ -1,0 +1,7 @@
+Libraries required for the project:
+
+pandas
+matplotlib
+seaborn
+numpy
+streamlit
